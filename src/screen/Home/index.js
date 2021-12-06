@@ -8,7 +8,7 @@ class Home extends Component {
         this.state = {
 
             data: [
-                { judul: 'Apel', desc: 'apel adalah sebuah buah' },
+                { judul: 'apel', desc: 'apel adalah sebuah buah' },
                 { judul: 'jeruk', desc: 'jeruk adalah sebuah buah' },
                 { judul: 'pear', desc: 'pear adalah sebuah buah' },
                 { judul: 'nanas', desc: 'apel adalah sebuah buah' },
@@ -19,8 +19,26 @@ class Home extends Component {
                 { judul: 'semangka', desc: 'pear adalah sebuah buah' }
             ],
 
-            pencarian: ''
+            dataTampil: [{ judul: 'apel', desc: 'apel adalah sebuah buah' },
+            { judul: 'jeruk', desc: 'jeruk adalah sebuah buah' },
+            { judul: 'pear', desc: 'pear adalah sebuah buah' },
+            { judul: 'nanas', desc: 'apel adalah sebuah buah' },
+            { judul: 'durian', desc: 'jeruk adalah sebuah buah' },
+            { judul: 'anggur', desc: 'pear adalah sebuah buah' },
+            { judul: 'pisang', desc: 'apel adalah sebuah buah' },
+            { judul: 'manggis', desc: 'jeruk adalah sebuah buah' },
+            { judul: 'semangka', desc: 'pear adalah sebuah buah' }
+            ],
+
+            pencarian: '',
         };
+    }
+
+    pencarian = () => {
+        let data = this.state.data
+        data = data.filter(item => item.judul.toLowerCase().includes(this.state.pencarian.toLowerCase()))
+
+        this.setState({ dataTampil: data });
     }
 
     render() {
@@ -43,23 +61,28 @@ class Home extends Component {
 
                 <TextInput
                     value={this.state.pencarian}
-                    onChangeText={(text) => this.setState({ pencarian: text })}
+                    onChangeText={(text) => this.setState({ pencarian: text }, () => this.pencarian())}
                     style={{
                         marginTop: 20,
                         marginHorizontal: 20,
                         backgroundColor: '#FFFF'
                     }}
+                    placeholder="masukkan kata disini"
                 />
 
                 <FlatList
-                    data={this.state.data}
+                    data={this.state.dataTampil}
                     renderItem={({ item, index }) => (
                         <TouchableOpacity style={{
                             backgroundColor: "#2196f3",
                             margin: 10,
                             padding: 5
                         }}
-                            onPress={() => this.props.navigation.navigate('Detail')}
+                            onPress={() => this.props.navigation.navigate('Detail',
+                                {
+                                    judul: item.judul,
+                                    desc: item.desc,
+                                })}
                         >
                             <Text style={{ color: 'white' }}>{item.judul}</Text>
                             <Text style={{ color: 'white' }}>{item.desc}</Text>
