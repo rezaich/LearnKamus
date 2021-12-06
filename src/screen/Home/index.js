@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StatusBar, FlatList, TouchableOpacity, TextInput } from 'react-native';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 class Home extends Component {
     constructor(props) {
@@ -47,8 +47,18 @@ class Home extends Component {
                 <StatusBar backgroundColor='#000000' />
                 <View style={{
                     backgroundColor: '#2196f3',
-                    paddingVertical: 15
+                    paddingVertical: 15,
+                    elevation: 3,
+                    flexDirection: 'row',
+                    paddingHorizontal: 20,
+                    alignItems: 'center'
                 }}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('About')}>
+                        <Icon style={{ marginRight: 10 }}
+                            name="info"
+                            size={25}
+                            color="#FFF" />
+                    </TouchableOpacity>
                     <Text style={{
                         color: '#FFFF',
                         textAlign: 'center',
@@ -72,7 +82,7 @@ class Home extends Component {
 
                 <FlatList
                     data={this.state.dataTampil}
-                    renderItem={({ item, index }) => (
+                    renderItem={({ item }) => (
                         <TouchableOpacity style={{
                             backgroundColor: "#2196f3",
                             margin: 10,
